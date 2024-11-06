@@ -21,11 +21,14 @@
 	2. Parser //análisis léxico y sintactico
 	3. Visitor //Operaciones
 - Buscar como hacer esa gramática, e implementarle el numpy.
+
 ###Funciones para Machine Learning (ML)
 - Visitor.py -> Operaciones con matrices
 - Visit condicion -> Ciclos if/else, for, while
 - Visit graficar -> Implmentar Matplotlib pyplot (buscar la gramática)
 - Visit red neuronal -> Scikit-learn
+
+
 ### Crear el árbol principal
 -Crear todos los objetos y crear la estructura para crear la consola.
 - 
