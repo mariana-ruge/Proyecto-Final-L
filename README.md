@@ -30,18 +30,31 @@
 -Crear todos los objetos y crear la estructura para crear la consola.
 - 
 **proyecto_dsl/
+
 ├── grammar/                 # **Definir gramática**
+|
 │   └── MiLenguaje.g4        # **Definición de gramática ANTLR4**
+|
 ├── src/                     # **Código fuente**
+|
 │   ├── main.py              # **Punto de entrada principal**
+|
 │   ├── parser.py            #** Parsing del código fuente con ANTLR4**
+|
 │   ├── visitor.py           # **Implementación del Visitor Pattern**
+|
 │   └── operations/          # **Implementación de operaciones específicas**
+|
 │       ├── matrix.py        #** Operaciones de matrices**
+|
 │       ├── arithmetic.py    # **Operaciones aritméticas**
+|
 │       ├── regression.py    #** Regresión lineal**
+|
 │       ├── classifier.py    # **Clasificador multicapa**
+|
 │       └── clustering.py    # **Algoritmo de agrupamiento**
+|
 └── README.md                # **Documentación del proyecto**
 **
 
