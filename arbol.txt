@@ -1,0 +1,19 @@
+proyecto_dsl_ml/
+├── antlr/                   # Gramática ANTLR y archivos generados
+│   ├── DSLML.g4             # Definición de la gramática para el DSL
+├── src/
+│   ├── interprete.py        # Intérprete principal que implementa el patrón Visitor
+│   ├── modelos_ml/          # Carpeta para los modelos de aprendizaje automático
+│   │   ├── mlp.py           # Implementación del clasificador MLP
+│   │   ├── regresion.py     # Implementación de la regresión lineal
+│   │   └── agrupamiento.py  # Implementación del agrupamiento K-means
+├── pruebas/                 # Scripts de ejemplo para probar el DSL
+│   ├── script_aritmetico.txt            # Ejemplo de operaciones aritméticas
+│   ├── script_matrices.txt              # Ejemplo de operaciones con matrices
+│   ├── script_condicionales_bucles.txt  # Ejemplo de condicionales y bucles
+│   ├── script_graficos.txt              # Ejemplo de generación de gráficos
+│   ├── script_lectura.txt               # Ejemplo de lectura de datos
+│   ├── script_escritura.txt             # Ejemplo de escritura de datos
+│   ├── script_regresion.txt             # Ejemplo de regresión lineal
+│   └── script_kmeans.txt                # Ejemplo de agrupamiento K-means
+└── ejecutar_dsl.py         # Script principal para ejecutar el intérprete del DSL
