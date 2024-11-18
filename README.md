@@ -59,6 +59,34 @@ proyecto_dsl/
 
             └── README.md                  # Documentación del proyecto
 
+**Mapeado extra a seguir** 
+proyecto_lenguaje/
+│
+├── src/
+│   ├── parser/
+│   │   ├── grammar.g4           # Definición de la gramática ANTLR
+│   │   ├── visitor.py            # Implementación del patrón Visitor
+│   │   └── lexer.py              # Analizador léxico
+│   │
+│   ├── core/
+│   │   ├── arithmetic.py         # Operaciones aritméticas
+│   │   ├── matrix_operations.py  # Operaciones de matrices
+│   │   └── file_handler.py       # Manejo de archivos
+│   │
+│   ├── ml/
+│   │   ├── multilayer_perceptron.py  # Clasificador de perceptrón multicapa
+│   │   └── clustering.py             # Algoritmos de agrupamiento
+│   │
+│   └── visualization/
+│       └── data_plotter.py       # Graficación de datos
+│
+├── tests/
+│   ├── test_arithmetic.py
+│   ├── test_matrix.py
+│   └── test_ml.py
+│
+├── requirements.txt
+└── README.md
 
 ### Repo para guiarnos
 [Natej](https://github.com/natej/dsl "Natej")
