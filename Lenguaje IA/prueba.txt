@@ -1,5 +1,0 @@
-# Assuming `lexer` and `parser` are already created
-tree = parser.program()
-visitor = MyVisitor()
-visitor.visit(tree)
-
