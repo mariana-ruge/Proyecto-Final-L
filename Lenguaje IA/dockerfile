@@ -1,0 +1,22 @@
+FROM ubuntu:24.04
+
+RUN apt-get update && apt-get install -y \
+    sudo \
+    openssh-server \
+    curl \
+    git \
+    net-tools \
+    && apt-get clean
+
+# Crear usuario y configurar sudo
+RUN useradd -m -s /bin/bash remoteuser && echo "remoteuser:password" | chpasswd && adduser remoteuser sudo
+
+# Configurar el servidor SSH
+RUN mkdir /var/run/sshd
+RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
+RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
+
+# Exponer el puerto SSH
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]

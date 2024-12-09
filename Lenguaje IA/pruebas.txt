@@ -1,0 +1,57 @@
+# Clasificar operaciones usando el perceptrón multicapa
+
+# Definir matrices como listas de listas
+A = [[1, 2], [3, 4]]
+B = [[5, 6], [7, 8]]
+
+# Suma de matrices
+perceptron(calc(suma(A, B)))  # Resultado esperado: [[6, 8], [10, 12]]
+
+# Definir otra matriz
+C = [[1, 0], [0, 1]]
+
+# Suma de una matriz con la identidad
+perceptron(calc(suma(A, C)))  # Resultado esperado: [[2, 2], [3, 5]]
+
+# Determinante de una matriz
+perceptron(calc(determinante(A)))  # Resultado esperado: -2
+
+# Transpuesta de una matriz
+perceptron(calc(transpuesta(A)))  # Resultado esperado: [[1, 3], [2, 4]]
+
+# Multiplicación de una matriz por un escalar
+perceptron(calc(multiplicacion_por_escalar(A, 2)))  # Resultado esperado: [[2, 4], [6, 8]]
+
+# Operaciones matemáticas básicas
+a = 16
+b = 5
+c = 2
+
+# Operaciones básicas
+perceptron(calc(suma(a, b)))          # 16 + 5 = 21
+perceptron(calc(resta(a, b)))         # 16 - 5 = 11
+perceptron(calc(multiplicacion(a, b)))  # 16 * 5 = 80
+perceptron(calc(division(a, b)))      # 16 / 5 = 3.2
+perceptron(calc(modulo(a, b)))        # 16 % 5 = 1
+
+# Potencia
+perceptron(calc(potencia(b, 2)))      # 5 ^ 2 = 25
+
+# Raíz con exponente personalizado
+perceptron(calc(raiz(a, 2)))          # Raíz cuadrada de 16 = 4
+perceptron(calc(raiz(a, 4)))          # Raíz cuarta de 16 = 2
+perceptron(calc(raiz(a, 0.5)))        # Raíz de 16 con exponente 0.5 = 4
+
+# Operaciones combinadas
+perceptron(calc(suma(potencia(b, 2), raiz(a, 2))))  # 25 + 4 = 29
+perceptron(calc(resta(multiplicacion(a, b), c)))   # 80 - 2 = 78
+
+# Ejemplo con bucles
+perceptron({
+    for i in 0..10, step=1 {
+        print("i", i)
+    }
+})
+
+
+perceptron(regresion([1, 2, 3], [4, 5, 6]))

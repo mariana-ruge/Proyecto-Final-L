@@ -1,0 +1,23 @@
+# Definimos algunas variables para las pruebas
+a = 16
+b = 5
+c = 2
+
+# Operaciones básicas
+calc(suma(a, b))          # 16 + 5 = 21
+calc(resta(a, b))         # 16 - 5 = 11
+calc(multiplicacion(a, b))  # 16 * 5 = 80
+calc(division(a, b))      # 16 / 5 = 3.2
+calc(modulo(a, b))        # 16 % 5 = 1
+
+# Potencia
+calc(potencia(b, 2))      # 5 ^ 2 = 25
+
+# Raíz con exponente personalizado
+calc(raiz(a, 2))          # Raíz cuadrada de 16 = 4
+calc(raiz(a, 4))          # Raíz cuarta de 16 = 2
+calc(raiz(a, 0.5))        # Raíz de 16 con exponente 0.5 = 4
+
+# Operaciones combinadas
+calc(suma(potencia(b, 2), raiz(a, 2)))  # 25 + 4 = 29
+calc(resta(multiplicacion(a, b), c))   # 80 - 2 = 78

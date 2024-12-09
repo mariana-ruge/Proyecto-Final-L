@@ -6,30 +6,59 @@ statement
     : arithmeticStatement
     | matrixStatement
     | conditionalStatement
-    | loopStatement
     | fileStatement
+    | loopStatement
+    | assignment
+    | incrementStatement
+    | regresionStatement
+    | perceptronStatement
     ;
 
 arithmeticStatement
     : 'calc' '(' expression ')'
+    | 'predecir' '(' expression ')'
     ;
 
 matrixStatement
     : 'matrix' ID '=' matrixOperation
     ;
 
-conditionalStatement
-    : 'if' '(' comparisonExpression ')' '{' statement* '}'
-    ;
+assignment
+    : variable '=' expression;
+
+incrementStatement
+    : variable incrementOp;
 
 loopStatement
-    : 'for' '(' variable 'in' range ')' '{' statement* '}'
-    | 'while' '(' comparisonExpression ')' '{' statement* '}'
+    : whileLoop
+    | forLoop
+    ;
+
+whileLoop
+    : 'while' comparisonExpression '{' statement* '}'
+    ;
+
+forLoop
+    : 'for' variable 'in' range (',' 'step' '=' expression)? '{' statement* '}'
+    ;
+
+
+range
+    : expression '..' expression
+    ;
+
+breakStatement
+    : 'break'
+    ;
+
+conditionalStatement
+    : 'if' '(' comparisonExpression ')' '{' statement* '}'
     ;
 
 fileStatement
     : 'read' '(' STRING ')'
     | 'write' '(' STRING ',' expression ')'
+    | 'print' '(' STRING ',' expression ')'
     ;
 
 comparisonExpression
@@ -41,13 +70,19 @@ compareOp
     ;
 
 expression
-    : expression '^' expression                   # PowerExpression
-    | expression ('*' | '/' | '%') expression    # MultiplicativeExpression
-    | expression ('+' | '-') expression          # AdditiveExpression
-    | '(' expression ')'                         # ParenthesizedExpression
-    | NUMBER                                     # NumberExpression
-    | variable                                   # VariableExpression
-    | matrixAccess                               # MatrixAccessExpression
+    : expression '^' expression                             // PowerExpression
+    | expression ('*' | '/' | '%') expression                // MultiplicativeExpression
+    | expression ('+' | '-') expression                      // AdditiveExpression
+    | ID '(' expression (',' expression)* ')'                // FunctionCallExpression
+    | '(' expression ')'                                     // ParenthesizedExpression
+    | NUMBER                                                 // NumberExpression
+    | variable                                               // VariableExpression
+    | 'raiz' '(' expression ',' expression ')'               // RootExpression
+    | matrix                                                 // MatrixExpression
+    ;
+
+matrix
+    : '[' (expression (',' expression)*)? ']'  // Matrix as a list of expressions
     ;
 
 matrixOperation
@@ -58,23 +93,33 @@ matrixFunction
     : 'add' | 'subtract' | 'multiply' | 'inverse' | 'transpose'
     ;
 
-matrix
-    : '[' (NUMBER (',' NUMBER)*)? ']'
-    ;
-
 matrixAccess
     : ID '[' NUMBER ']'
+    ;
+
+matrixRow
+    : NUMBER (',' NUMBER)*
+    ;
+
+incrementOp
+    : '++' | '--'
     ;
 
 variable
     : ID
     ;
 
-range
-    : NUMBER '..' NUMBER
+regresionStatement
+    : 'regresion' '(' expression ',' expression ')'
     ;
 
-NUMBER: [0-9]+('.'[0-9]+)?;
+perceptronStatement
+    : 'perceptron' '(' (statement | expression) ')'
+    ;
+
+NUMBER: [0-9]+ ('.' [0-9]+)?;
 ID: [a-zA-Z_][a-zA-Z0-9_]*;
 STRING: '"' .*? '"';
 WS: [ \t\r\n]+ -> skip;
+
+COMMENT: '#' ~[\r\n]* -> skip;
