@@ -5,13 +5,22 @@ program: statement+ EOF;
 statement
     : arithmeticStatement
     | matrixStatement
-    | conditionalStatement
     | fileStatement
     | loopStatement
     | assignment
     | incrementStatement
     | regresionStatement
     | perceptronStatement
+    | matrixAccess
+    | printStatement
+    | condicionalStatement
+    ;
+
+printStatement: 'print' '(' expression ')' ;
+
+literal
+    : NUMBER
+    | STRING
     ;
 
 arithmeticStatement
@@ -20,39 +29,52 @@ arithmeticStatement
     ;
 
 matrixStatement
-    : 'matrix' ID '=' matrixOperation
+    : 'matrix' ID '=' (matrix | matrixOperation)
     ;
 
 assignment
-    : variable '=' expression;
+    : variable '=' expression
+    ;
 
 incrementStatement
-    : variable incrementOp;
+    : variable incrementOp
+    ;
 
 loopStatement
     : whileLoop
     | forLoop
     ;
 
+condicionalStatement
+    : ifStatement
+    | ifElseStatement
+    | ifElseIfStatement
+    ;
+
+ifStatement
+    : 'if' '(' comparisonExpression ')' '{' statement* '}'
+    ;
+
+ifElseStatement
+    : 'if' '(' comparisonExpression ')' '{' statement* '}' 'else' '{' statement* '}'
+    ;
+
+ifElseIfStatement
+    : 'if' '(' comparisonExpression ')' '{' statement* '}' 
+      ('else' 'if' '(' comparisonExpression ')' '{' statement* '}')* 
+      ('else' '{' statement* '}')?
+    ;
+
 whileLoop
-    : 'while' comparisonExpression '{' statement* '}'
+    : 'while' expression '{' statement* '}'
     ;
 
 forLoop
     : 'for' variable 'in' range (',' 'step' '=' expression)? '{' statement* '}'
     ;
 
-
 range
     : expression '..' expression
-    ;
-
-breakStatement
-    : 'break'
-    ;
-
-conditionalStatement
-    : 'if' '(' comparisonExpression ')' '{' statement* '}'
     ;
 
 fileStatement
@@ -61,28 +83,25 @@ fileStatement
     | 'print' '(' STRING ',' expression ')'
     ;
 
+expression
+    : primaryExpression
+    | expression '^' expression
+    | expression ('*' | '/' | '%') expression
+    | expression ('+' | '-') expression
+    ;
+
 comparisonExpression
-    : expression compareOp expression
+    : primaryExpression compareOp primaryExpression
+    | comparisonExpression '&&' comparisonExpression
+    | comparisonExpression '||' comparisonExpression
     ;
 
 compareOp
     : '==' | '!=' | '<' | '<=' | '>' | '>='
     ;
 
-expression
-    : expression '^' expression                             // PowerExpression
-    | expression ('*' | '/' | '%') expression                // MultiplicativeExpression
-    | expression ('+' | '-') expression                      // AdditiveExpression
-    | ID '(' expression (',' expression)* ')'                // FunctionCallExpression
-    | '(' expression ')'                                     // ParenthesizedExpression
-    | NUMBER                                                 // NumberExpression
-    | variable                                               // VariableExpression
-    | 'raiz' '(' expression ',' expression ')'               // RootExpression
-    | matrix                                                 // MatrixExpression
-    ;
-
 matrix
-    : '[' (expression (',' expression)*)? ']'  // Matrix as a list of expressions
+    : '[' (expression (',' expression)*)? ']'  // Matriz de expresiones
     ;
 
 matrixOperation
@@ -94,11 +113,7 @@ matrixFunction
     ;
 
 matrixAccess
-    : ID '[' NUMBER ']'
-    ;
-
-matrixRow
-    : NUMBER (',' NUMBER)*
+    : ID '[' expression ']'
     ;
 
 incrementOp
@@ -117,9 +132,20 @@ perceptronStatement
     : 'perceptron' '(' (statement | expression) ')'
     ;
 
+primaryExpression
+    : literal
+    | ID
+    | matrixAccess
+    | functionCall
+    | '(' expression ')'
+    ;
+
+functionCall
+    : ID '(' expression (',' expression)* ')'
+    ;
+
 NUMBER: [0-9]+ ('.' [0-9]+)?;
 ID: [a-zA-Z_][a-zA-Z0-9_]*;
 STRING: '"' .*? '"';
 WS: [ \t\r\n]+ -> skip;
-
 COMMENT: '#' ~[\r\n]* -> skip;

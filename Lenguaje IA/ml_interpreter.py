@@ -17,6 +17,8 @@ from matematicas import (  # Operaciones matemáticas definidas en un módulo ex
 )
 from perceptron import train_perceptron, classify_operation, train  # Función para entrenar un modelo de perceptrón
 from loop import exitForLoop, exitWhileLoop  # Funciones para manejar bucles importadas de loops.py
+from condicionales import Condicionales
+
 
 # Constante para definir el límite máximo de recursión en bucles
 MAX_RECURSION_DEPTH = 1000  # Previene desbordamientos de pila en recursiones profundas
@@ -32,14 +34,14 @@ class MLInterpreter(MLListener):
         self.execution_count = 0  # Contador para evitar múltiples ejecuciones de declaraciones
         self.perceptron_model = None  # Modelo de perceptrón, inicialmente vacío
         self.recursion_depth = 0  # Profundidad actual de recursión, usada para controlar bucles
+        self.condicionales = Condicionales(self) #Para manejar los bucles
+
+        
 
     # Método para evaluar expresiones de manera segura
     def _safe_eval(self, expression):
         try:
-            # Reemplaza operadores no estándar por su equivalente en Python
-            expression = expression.replace("^", "**")
-
-            # Define un contexto seguro para evaluar la expresión
+            expression = expression.replace("^", "**")  # Asegúrate de que ^ se convierta en el operador de potenciación
             safe_context = {
                 'raiz': raiz,
                 'suma': suma,
@@ -52,23 +54,17 @@ class MLInterpreter(MLListener):
                 'transpuesta': MatrixOperations.transpuesta,
                 'producto_punto': MatrixOperations.producto_punto,
                 'multiplicacion_por_escalar': MatrixOperations.multiplicacion_por_escalar,
-                **self.variables  # Agrega las variables definidas en el intérprete
+                **self.variables  # Incluye las variables definidas
             }
 
-            # Evalúa la expresión utilizando el contexto seguro
+            # Evalúa la expresión dentro de un contexto seguro
             result = eval(expression, {"__builtins__": None}, safe_context)
-
-            # Si el resultado es None, registra un error
-            if result is None:
-                ErrorHandler.log_error(f"Result of expression '{expression}' is None.")
-                return None
-
-            return result  # Devuelve el resultado de la evaluación
+            return result  # Devuelve el resultado
 
         except Exception as e:
-            # Manejo de errores en caso de que la evaluación falle
-            ErrorHandler.log_error(f"Error evaluating expression '{expression}': {e}")
+            ErrorHandler.log_error(f"Error evaluando la expresión '{expression}': {e}")
             return None
+
 
     # Método para manejar bucles 'for', delega a la función modularizada
     def exitForLoop(self, ctx):
@@ -100,6 +96,47 @@ class MLInterpreter(MLListener):
 
         except Exception as e:
             print(f"[error] {str(e)}")  # Imprime cualquier error inesperado
+            
+    
+    def exitMatrixStatement(self, ctx):
+        try:
+            variable_name = ctx.ID().getText()
+            if ctx.matrix():
+                value = self._safe_eval(ctx.matrix().getText())
+                self.variables[variable_name] = value
+            elif ctx.matrixOperation():
+                operation = ctx.matrixOperation().getText()
+                value = self._safe_eval(operation)
+                self.variables[variable_name] = value
+            elif ctx.matrixAccess():
+                # Manejo del acceso a matrices
+                access_expr = ctx.matrixAccess().getText()
+                value = self._safe_eval(access_expr)
+                print(f"{variable_name}[...] = {value}")
+            else:
+                ErrorHandler.log_error(f"No se reconoce el tipo en matrixStatement para {variable_name}")
+        except Exception as e:
+            ErrorHandler.log_error(f"Error en matrixStatement: {e}")
+
+    def exitFileStatement(self, ctx):
+        try:
+            if ctx.read():
+                filename = ctx.read().getText()
+                with open(filename, 'r') as file:
+                    content = file.read()
+                    print(content)
+            elif ctx.write():
+                filename = ctx.write().getText()
+                expression = ctx.expression().getText()
+                value = self._safe_eval(expression)
+                with open(filename, 'w') as file:
+                    file.write(str(value))
+            else:
+                ErrorHandler.log_error(f"Unknown file operation: {ctx.getText()}")
+        except Exception as e:
+            ErrorHandler.log_error(f"Error handling file statement: {e}")
+
+
 
     # Método para manejar asignaciones de variables
     def exitAssignment(self, ctx: MLParser.AssignmentContext):
@@ -112,7 +149,6 @@ class MLInterpreter(MLListener):
 
         if value is not None:
             self.variables[variable_name] = value  # Asigna el valor a la variable
-            print(f"{value}")  # Imprime el valor asignado
         else:
             ErrorHandler.log_error(f"Failed to assign value to {variable_name}")  # Registra un error si la evaluación falla
 
@@ -135,19 +171,53 @@ class MLInterpreter(MLListener):
         print(f"Predicted Class: {predicted_class}")
 
 
+    def exitConditionalStatement(self, ctx):
+        """
+        Maneja las declaraciones condicionales 'if' y 'else'.
+        """
+        self.condicionales.manejar_condicional(ctx)
 
-    # Método para manejar distintas declaraciones del lenguaje
+
+
+
+    def handle_print_statement(self, ctx):
+        """Método para manejar declaraciones de print de manera explícita"""
+        try:
+            # Extrae la expresión y depura su valor
+            expression = ctx.expression().getText()  # Obtiene el texto de la expresión
+            print(f"Expresión de print: {expression}")  # Depuración: muestra la expresión
+
+            result = self._safe_eval(expression)  # Evalúa la expresión
+            print(f"Resultado de la expresión print: {result}")  # Depuración: muestra el resultado
+
+            if result is not None:
+                print(result)  # Imprime el resultado
+            else:
+                ErrorHandler.log_error(f"Error al ejecutar print en la expresión: {expression}")
+        except Exception as e:
+            ErrorHandler.log_error(f"Error en la instrucción print: {e}")
+
+
+    def exitPrintStatement(self, ctx):
+        expression = ctx.expression().getText()  # Obtiene el texto de la expresión
+        result = self._safe_eval(expression)  # Evalúa la expresión
+        if result is not None:
+            print(result)  # Imprime el resultado
+        else:
+            ErrorHandler.log_error(f"Error al evaluar la expresión print: {expression}")
+
+
     def exitStatement(self, ctx):
-        if self.execution_count > 0:  # Evita múltiples ejecuciones del mismo bloque
+        if self.execution_count > 0:
             return
 
         # Verifica el tipo de declaración y llama al método correspondiente
-        if ctx.arithmeticStatement():
+        if ctx.printStatement():
+            self.handle_print_statement(ctx.printStatement())  # Llama al método para manejar la instrucción print
+        elif ctx.arithmeticStatement():
             self.exitArithmeticStatement(ctx.arithmeticStatement())
         elif ctx.matrixStatement():
             self.exitMatrixStatement(ctx.matrixStatement())
-        elif ctx.conditionalStatement():
-            self.exitConditionalStatement(ctx.conditionalStatement())
         elif ctx.fileStatement():
             self.exitFileStatement(ctx.fileStatement())
         elif ctx.loopStatement():
@@ -160,8 +230,16 @@ class MLInterpreter(MLListener):
             self.exitRegresionStatement(ctx.regresionStatement())
 
         self.execution_count += 1  # Incrementa el contador de ejecuciones
+
+
+
+
+
         
         
+        
+    
+    
     def exitRegresionStatement(self, ctx: MLParser.RegresionStatementContext):
         try:
             # Verificar si ya se ejecutó la regresión
@@ -233,6 +311,8 @@ def main():
         # Recorre el árbol sintáctico con el intérprete
         walker = ParseTreeWalker()  # Crea un objeto para recorrer el árbol
         walker.walk(interpreter, tree)  # Ejecuta el recorrido del árbol
+        
+    
 
     except Exception as e:
         # Maneja cualquier error durante la ejecución

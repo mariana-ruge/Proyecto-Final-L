@@ -26,6 +26,24 @@ class MLListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by MLParser#printStatement.
+    def enterPrintStatement(self, ctx:MLParser.PrintStatementContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#printStatement.
+    def exitPrintStatement(self, ctx:MLParser.PrintStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#literal.
+    def enterLiteral(self, ctx:MLParser.LiteralContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#literal.
+    def exitLiteral(self, ctx:MLParser.LiteralContext):
+        pass
+
+
     # Enter a parse tree produced by MLParser#arithmeticStatement.
     def enterArithmeticStatement(self, ctx:MLParser.ArithmeticStatementContext):
         pass
@@ -71,6 +89,42 @@ class MLListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by MLParser#condicionalStatement.
+    def enterCondicionalStatement(self, ctx:MLParser.CondicionalStatementContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#condicionalStatement.
+    def exitCondicionalStatement(self, ctx:MLParser.CondicionalStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#ifStatement.
+    def enterIfStatement(self, ctx:MLParser.IfStatementContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#ifStatement.
+    def exitIfStatement(self, ctx:MLParser.IfStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#ifElseStatement.
+    def enterIfElseStatement(self, ctx:MLParser.IfElseStatementContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#ifElseStatement.
+    def exitIfElseStatement(self, ctx:MLParser.IfElseStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#ifElseIfStatement.
+    def enterIfElseIfStatement(self, ctx:MLParser.IfElseIfStatementContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#ifElseIfStatement.
+    def exitIfElseIfStatement(self, ctx:MLParser.IfElseIfStatementContext):
+        pass
+
+
     # Enter a parse tree produced by MLParser#whileLoop.
     def enterWhileLoop(self, ctx:MLParser.WhileLoopContext):
         pass
@@ -98,30 +152,21 @@ class MLListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MLParser#breakStatement.
-    def enterBreakStatement(self, ctx:MLParser.BreakStatementContext):
-        pass
-
-    # Exit a parse tree produced by MLParser#breakStatement.
-    def exitBreakStatement(self, ctx:MLParser.BreakStatementContext):
-        pass
-
-
-    # Enter a parse tree produced by MLParser#conditionalStatement.
-    def enterConditionalStatement(self, ctx:MLParser.ConditionalStatementContext):
-        pass
-
-    # Exit a parse tree produced by MLParser#conditionalStatement.
-    def exitConditionalStatement(self, ctx:MLParser.ConditionalStatementContext):
-        pass
-
-
     # Enter a parse tree produced by MLParser#fileStatement.
     def enterFileStatement(self, ctx:MLParser.FileStatementContext):
         pass
 
     # Exit a parse tree produced by MLParser#fileStatement.
     def exitFileStatement(self, ctx:MLParser.FileStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#expression.
+    def enterExpression(self, ctx:MLParser.ExpressionContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#expression.
+    def exitExpression(self, ctx:MLParser.ExpressionContext):
         pass
 
 
@@ -140,15 +185,6 @@ class MLListener(ParseTreeListener):
 
     # Exit a parse tree produced by MLParser#compareOp.
     def exitCompareOp(self, ctx:MLParser.CompareOpContext):
-        pass
-
-
-    # Enter a parse tree produced by MLParser#expression.
-    def enterExpression(self, ctx:MLParser.ExpressionContext):
-        pass
-
-    # Exit a parse tree produced by MLParser#expression.
-    def exitExpression(self, ctx:MLParser.ExpressionContext):
         pass
 
 
@@ -188,15 +224,6 @@ class MLListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MLParser#matrixRow.
-    def enterMatrixRow(self, ctx:MLParser.MatrixRowContext):
-        pass
-
-    # Exit a parse tree produced by MLParser#matrixRow.
-    def exitMatrixRow(self, ctx:MLParser.MatrixRowContext):
-        pass
-
-
     # Enter a parse tree produced by MLParser#incrementOp.
     def enterIncrementOp(self, ctx:MLParser.IncrementOpContext):
         pass
@@ -230,6 +257,24 @@ class MLListener(ParseTreeListener):
 
     # Exit a parse tree produced by MLParser#perceptronStatement.
     def exitPerceptronStatement(self, ctx:MLParser.PerceptronStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#primaryExpression.
+    def enterPrimaryExpression(self, ctx:MLParser.PrimaryExpressionContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#primaryExpression.
+    def exitPrimaryExpression(self, ctx:MLParser.PrimaryExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#functionCall.
+    def enterFunctionCall(self, ctx:MLParser.FunctionCallContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#functionCall.
+    def exitFunctionCall(self, ctx:MLParser.FunctionCallContext):
         pass
 
 
