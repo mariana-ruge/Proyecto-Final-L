@@ -135,6 +135,7 @@ class MLInterpreter(MLListener):
         print(f"Predicted Class: {predicted_class}")
 
 
+
     # Método para manejar distintas declaraciones del lenguaje
     def exitStatement(self, ctx):
         if self.execution_count > 0:  # Evita múltiples ejecuciones del mismo bloque
@@ -159,6 +160,33 @@ class MLInterpreter(MLListener):
             self.exitRegresionStatement(ctx.regresionStatement())
 
         self.execution_count += 1  # Incrementa el contador de ejecuciones
+        
+        
+    def exitRegresionStatement(self, ctx: MLParser.RegresionStatementContext):
+        try:
+            # Verificar si ya se ejecutó la regresión
+            if hasattr(self, 'regresion_ejecutada') and self.regresion_ejecutada:
+                print("")
+                return
+            
+            # Marcamos que la regresión ha sido ejecutada
+            self.regresion_ejecutada = True
+
+            # Obtén las dos expresiones
+            X_expr = ctx.expression(0).getText()  # Primera expresión (datos)
+            y_expr = ctx.expression(1).getText()  # Segunda expresión (objetivos)
+
+            # Llama a la función de regresión
+            result = ejecutar_regresion(X_expr, y_expr)
+
+            # Imprime el resultado
+            print(f"Regresión resultado: {result}")
+
+        except Exception as e:
+            print(f"[error] {str(e)}")
+
+
+
 
 
 # Función externa para entrenar un perceptrón
@@ -166,6 +194,10 @@ def entrenar_perceptron():
     W1, b1, W2, b2, label_encoder = train_perceptron()  # Entrena el modelo
     perceptron_model = (W1, b1, W2, b2)  # Crea una tupla con los parámetros del modelo
     return perceptron_model  # Devuelve el modelo entrenado
+
+
+
+
 
 # Punto de entrada principal del programa
 def main():
@@ -186,6 +218,8 @@ def main():
         stream = CommonTokenStream(lexer)  # Genera un flujo de tokens
         parser = MLParser(stream)  # Analiza el flujo de tokens
         tree = parser.program()  # Genera el árbol sintáctico
+    
+
 
         # Entrena el perceptrón si se encuentra la instrucción correspondiente
         perceptron_model = None
