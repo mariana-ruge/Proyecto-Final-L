@@ -66,8 +66,9 @@ ifElseIfStatement
     ;
 
 whileLoop
-    : 'while' expression '{' statement* '}'
+    : 'while' '(' comparisonExpression ')' '{' statement* '}'
     ;
+
 
 forLoop
     : 'for' variable 'in' range (',' 'step' '=' expression)? '{' statement* '}'
@@ -80,7 +81,6 @@ range
 fileStatement
     : 'read' '(' STRING ')'
     | 'write' '(' STRING ',' expression ')'
-    | 'print' '(' STRING ',' expression ')'
     ;
 
 expression
@@ -88,6 +88,11 @@ expression
     | expression '^' expression
     | expression ('*' | '/' | '%') expression
     | expression ('+' | '-') expression
+    | list 
+    ;
+
+list
+    : '[' (expression (',' expression)*)? ']'  // Define a list of expressions
     ;
 
 comparisonExpression

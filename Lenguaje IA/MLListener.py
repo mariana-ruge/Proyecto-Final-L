@@ -170,6 +170,15 @@ class MLListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by MLParser#list.
+    def enterList(self, ctx:MLParser.ListContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#list.
+    def exitList(self, ctx:MLParser.ListContext):
+        pass
+
+
     # Enter a parse tree produced by MLParser#comparisonExpression.
     def enterComparisonExpression(self, ctx:MLParser.ComparisonExpressionContext):
         pass

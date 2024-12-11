@@ -1,4 +1,7 @@
 # Clasificar operaciones usando el perceptrón multicapa
+perceptron = perceptron()  # Crear el modelo
+perceptron.fit(X_train, y_train)  # Entrenar el modelo con datos
+
 
 # Definir matrices como listas de listas
 A = [[1, 2], [3, 4]]

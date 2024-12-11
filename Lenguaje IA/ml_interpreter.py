@@ -1,4 +1,3 @@
-
 # Importación de módulos estándar y librerías externas necesarias
 import sys  # Proporciona acceso a funciones y parámetros específicos del sistema
 import math  # Proporciona funciones matemáticas estándar
@@ -237,7 +236,6 @@ class MLInterpreter(MLListener):
 
         
         
-        
     
     
     def exitRegresionStatement(self, ctx: MLParser.RegresionStatementContext):
@@ -262,18 +260,6 @@ class MLInterpreter(MLListener):
 
         except Exception as e:
             print(f"[error] {str(e)}")
-
-
-
-
-
-# Función externa para entrenar un perceptrón
-def entrenar_perceptron():
-    W1, b1, W2, b2, label_encoder = train_perceptron()  # Entrena el modelo
-    perceptron_model = (W1, b1, W2, b2)  # Crea una tupla con los parámetros del modelo
-    return perceptron_model  # Devuelve el modelo entrenado
-
-
 
 
 
@@ -302,7 +288,7 @@ def main():
         # Entrena el perceptrón si se encuentra la instrucción correspondiente
         perceptron_model = None
         if 'train_perceptron' in input_code:
-            perceptron_model = entrenar_perceptron()
+            perceptron_model = train_perceptron()
 
         # Crea una instancia del intérprete
         interpreter = MLInterpreter(input_lines)
@@ -322,3 +308,4 @@ def main():
 # Ejecuta la función principal si el script es ejecutado directamente
 if __name__ == '__main__':
     main()
+
