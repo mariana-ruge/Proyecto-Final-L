@@ -1,9 +1,9 @@
-x = 6
+x = 10
 
-if (x == 5) {
+if (x == 10) {
     print("x es igual a 10")
-} else if (x > 4) {
-    print("x es mayor que 10")
+} else if (x > 10) {
+    print("x es mayor que 3")
 } else {
-    print("x es menor que 10")
+    print("x es menor que 2")
 }

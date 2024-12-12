@@ -14,6 +14,8 @@ statement
     | matrixAccess
     | printStatement
     | condicionalStatement
+    | trigFunction
+    | plotStatement
     ;
 
 printStatement: 'print' '(' expression ')' ;
@@ -147,6 +149,15 @@ primaryExpression
 
 functionCall
     : ID '(' expression (',' expression)* ')'
+    ;
+
+trigFunction
+    : ('sin' | 'cos' | 'tan' | 'asin' | 'acos' | 'atan') '(' expression ')'
+    | 'plotTrig' '(' trigFunction (',' trigFunction)* ',' range ')'
+    ;
+
+plotStatement
+    : 'plotTrig' '(' trigFunction (',' trigFunction)* ',' range ')'
     ;
 
 NUMBER: [0-9]+ ('.' [0-9]+)?;

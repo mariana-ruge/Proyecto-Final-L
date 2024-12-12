@@ -109,14 +109,22 @@ def train(X, y_encoded, input_size, hidden_size=10, output_size=1, epochs=1000, 
 
 # Función para clasificar nuevas operaciones
 # Usa los pesos entrenados para predecir a qué categoría pertenece una nueva operación.
-def classify_operation(operation, W1, b1, W2, b2):
+# Función para clasificar nuevas operaciones
+def classify_operation(operation, W1, b1, W2, b2, label_encoder):
+    # Extraer las características de la operación
     features = np.array(extract_features(operation)).reshape(1, -1)  # Convierte la operación en un vector de características.
     z1 = np.dot(features, W1) + b1  # Calcula la entrada a la capa oculta.
     a1 = sigmoid(z1)  # Activa la capa oculta.
     z2 = np.dot(a1, W2) + b2  # Calcula la entrada a la capa de salida.
     a2 = sigmoid(z2)  # Activa la capa de salida.
-    predicted_class = np.argmax(a2)  # Encuentra la categoría con la probabilidad más alta.
-    return predicted_class
+
+    # Obtiene la clase predicha en base a la mayor probabilidad
+    predicted_class_index = np.argmax(a2, axis=1)[0]
+
+    # Devuelve el nombre de la clase en lugar del índice
+    predicted_class_name = [key for key, value in label_encoder.items() if value == predicted_class_index][0]
+    return predicted_class_name
+
 
 # Función principal para entrenar y clasificar
 def train_perceptron():

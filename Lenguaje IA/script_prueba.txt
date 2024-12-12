@@ -1,0 +1,56 @@
+# Definición de matrices
+A = [[1, 2], [3, 4]]
+B = [[5, 6], [7, 8]]
+
+# Operaciones con matrices
+calc(suma(A, B))  # Esperado: [[6, 8], [10, 12]]
+
+C = [[1, 0], [0, 1]]
+calc(suma(A, C))  # Esperado: [[2, 2], [3, 5]]
+calc(determinante(A))  # Esperado: -2
+calc(transpuesta(A))  # Esperado: [[1, 3], [2, 4]]
+calc(multiplicacion_por_escalar(A, 2))  # Esperado: [[2, 4], [6, 8]]
+
+# Operaciones aritméticas básicas
+a = 16
+b = 5
+c = 2
+calc(suma(a, b))          # Esperado: 21
+calc(resta(a, b))         # Esperado: 11
+calc(multiplicacion(a, b))  # Esperado: 80
+calc(division(a, b))      # Esperado: 3.2
+calc(modulo(a, b))        # Esperado: 1
+calc(potencia(b, 2))      # Esperado: 25
+calc(raiz(a, 2))          # Esperado: 4
+calc(raiz(a, 4))          # Esperado: 2
+calc(raiz(a, 0.5))        # Esperado: 4
+calc(suma(potencia(b, 2), raiz(a, 2)))  # Esperado: 29
+calc(resta(multiplicacion(a, b), c))    # Esperado: 78
+
+# Condicionales
+x = 10
+if (x == 10) {
+    print("x es igual a 10")
+} else if (x > 10) {
+    print("x es mayor que 10")
+} else {
+    print("x es menor que 10")
+}
+
+# Regresión lineal
+regresion([1, 2, 3, 4, 5], [5, 7, 9, 11, 13])
+
+# Bucle for
+for i in 0..10, step=2 {
+    print("i", i)
+}
+
+# Bucle while
+i = 0
+while (i < 5) {
+    print(i)
+    i = i + 1
+}
+
+# Operaciones con funciones
+calc(predecir(raiz(25, 2)))  # Esperado: 5

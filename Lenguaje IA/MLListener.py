@@ -287,5 +287,23 @@ class MLListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by MLParser#trigFunction.
+    def enterTrigFunction(self, ctx:MLParser.TrigFunctionContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#trigFunction.
+    def exitTrigFunction(self, ctx:MLParser.TrigFunctionContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#plotStatement.
+    def enterPlotStatement(self, ctx:MLParser.PlotStatementContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#plotStatement.
+    def exitPlotStatement(self, ctx:MLParser.PlotStatementContext):
+        pass
+
+
 
 del MLParser

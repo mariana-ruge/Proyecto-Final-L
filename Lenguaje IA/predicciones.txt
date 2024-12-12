@@ -1,0 +1,15 @@
+// Entrenar el modelo
+train_perceptron_model(X_train, y_train)
+
+// Realizar operación matemática
+operation = "5 + 3"
+print(f"Operación: {operation}")  # Imprime la operacion
+
+result = eval(operation)  # Evalúa la operacion
+
+// Evaluar el modelo con el resultado
+prediction = test_perceptron_model(result)  # Predicción del modelo
+
+// Imprimir los resultados
+print(f"Resultado de la operación: {result}")  # Imprime el resultado de la operacion
+print(f"Predicción del modelo: {prediction}")  # Imprime la predicción

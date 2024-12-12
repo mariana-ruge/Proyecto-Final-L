@@ -17,6 +17,8 @@ from matematicas import (  # Operaciones matemáticas definidas en un módulo ex
 from perceptron import train_perceptron, classify_operation, train  # Función para entrenar un modelo de perceptrón
 from loop import exitForLoop, exitWhileLoop  # Funciones para manejar bucles importadas de loops.py
 from condicionales import Condicionales
+from trigonometria import graficar_funcion_trigonometrica  # [Agregado] Importa el módulo de funciones trigonométricas
+
 
 
 # Constante para definir el límite máximo de recursión en bucles
@@ -40,7 +42,7 @@ class MLInterpreter(MLListener):
     # Método para evaluar expresiones de manera segura
     def _safe_eval(self, expression):
         try:
-            expression = expression.replace("^", "**")  # Asegúrate de que ^ se convierta en el operador de potenciación
+            expression = expression.replace("^", "**")  # Ajusta el operador de potenciación
             safe_context = {
                 'raiz': raiz,
                 'suma': suma,
@@ -56,13 +58,13 @@ class MLInterpreter(MLListener):
                 **self.variables  # Incluye las variables definidas
             }
 
-            # Evalúa la expresión dentro de un contexto seguro
             result = eval(expression, {"__builtins__": None}, safe_context)
-            return result  # Devuelve el resultado
+            return result
 
         except Exception as e:
             ErrorHandler.log_error(f"Error evaluando la expresión '{expression}': {e}")
             return None
+
 
 
     # Método para manejar bucles 'for', delega a la función modularizada
@@ -157,9 +159,8 @@ class MLInterpreter(MLListener):
     def exitPerceptronStatement(self, ctx: MLParser.PerceptronStatementContext):
         # Verifica que el perceptrón esté entrenado antes de ejecutarlo
         if self.perceptron_model is None:
-            ErrorHandler.log_error("Perceptron model is not trained.")
+            print(" ")
             return
-        
         # Extrae la operación o expresión contenida en el perceptronStatement
         operation = ctx.getText()
         
@@ -230,12 +231,6 @@ class MLInterpreter(MLListener):
 
         self.execution_count += 1  # Incrementa el contador de ejecuciones
 
-
-
-
-
-        
-        
     
     
     def exitRegresionStatement(self, ctx: MLParser.RegresionStatementContext):
@@ -287,6 +282,11 @@ def main():
 
         # Entrena el perceptrón si se encuentra la instrucción correspondiente
         perceptron_model = None
+        W1, b1, W2, b2, label_encoder = train_perceptron()  # Entrenar el modelo
+        # Ahora puedes intentar clasificar operaciones después de que el modelo esté entrenado.
+        operation = "calc(3 + 5)"  # Ejemplo de operación a clasificar
+        predicted_class = classify_operation(operation, W1, b1, W2, b2, label_encoder)
+        print(f"Predicted class: {predicted_class}")
         if 'train_perceptron' in input_code:
             perceptron_model = train_perceptron()
 
