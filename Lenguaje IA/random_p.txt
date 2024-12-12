@@ -1,4 +1,1 @@
-random()
 random(1, 10)
-print(random())
-print(random(5, 15))

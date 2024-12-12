@@ -269,10 +269,9 @@ class MLInterpreter(MLListener):
         elif ctx.regresionStatement():
             self.exitRegresionStatement(ctx.regresionStatement())
         elif ctx.plotStatement():  # Verificación para plotTrig
-            self.exitPlotStatement(ctx.plotStatement())# Llama al método para manejar la instrucción plotTrig
-        elif ctx.exitRandomStatement():
-            self.exitRandomStatement(ctx.randomStatement())
-
+            self.exitPlotStatement(ctx.plotStatement())  # Llama al método para manejar la instrucción plotTrig
+        elif ctx.randomStatement():  # Asegúrate de agregar esta verificación
+            self.exitRandomStatement(ctx.randomStatement())  # Llama al método para manejar el random
         self.execution_count += 1  # Incrementa el contador de ejecuciones
 
     
