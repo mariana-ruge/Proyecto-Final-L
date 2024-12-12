@@ -1,0 +1,2 @@
+# Declaración de la función trigonométrica y su rango
+plotTrig(sin(x), range(-2 * np.pi, 2 * np.pi))

@@ -35,12 +35,57 @@ class MLListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MLParser#literal.
-    def enterLiteral(self, ctx:MLParser.LiteralContext):
+    # Enter a parse tree produced by MLParser#plotTrig.
+    def enterPlotTrig(self, ctx:MLParser.PlotTrigContext):
         pass
 
-    # Exit a parse tree produced by MLParser#literal.
-    def exitLiteral(self, ctx:MLParser.LiteralContext):
+    # Exit a parse tree produced by MLParser#plotTrig.
+    def exitPlotTrig(self, ctx:MLParser.PlotTrigContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#expression.
+    def enterExpression(self, ctx:MLParser.ExpressionContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#expression.
+    def exitExpression(self, ctx:MLParser.ExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#list.
+    def enterList(self, ctx:MLParser.ListContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#list.
+    def exitList(self, ctx:MLParser.ListContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#primaryExpression.
+    def enterPrimaryExpression(self, ctx:MLParser.PrimaryExpressionContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#primaryExpression.
+    def exitPrimaryExpression(self, ctx:MLParser.PrimaryExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#trigFunction.
+    def enterTrigFunction(self, ctx:MLParser.TrigFunctionContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#trigFunction.
+    def exitTrigFunction(self, ctx:MLParser.TrigFunctionContext):
+        pass
+
+
+    # Enter a parse tree produced by MLParser#range.
+    def enterRange(self, ctx:MLParser.RangeContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#range.
+    def exitRange(self, ctx:MLParser.RangeContext):
         pass
 
 
@@ -143,39 +188,12 @@ class MLListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MLParser#range.
-    def enterRange(self, ctx:MLParser.RangeContext):
-        pass
-
-    # Exit a parse tree produced by MLParser#range.
-    def exitRange(self, ctx:MLParser.RangeContext):
-        pass
-
-
     # Enter a parse tree produced by MLParser#fileStatement.
     def enterFileStatement(self, ctx:MLParser.FileStatementContext):
         pass
 
     # Exit a parse tree produced by MLParser#fileStatement.
     def exitFileStatement(self, ctx:MLParser.FileStatementContext):
-        pass
-
-
-    # Enter a parse tree produced by MLParser#expression.
-    def enterExpression(self, ctx:MLParser.ExpressionContext):
-        pass
-
-    # Exit a parse tree produced by MLParser#expression.
-    def exitExpression(self, ctx:MLParser.ExpressionContext):
-        pass
-
-
-    # Enter a parse tree produced by MLParser#list.
-    def enterList(self, ctx:MLParser.ListContext):
-        pass
-
-    # Exit a parse tree produced by MLParser#list.
-    def exitList(self, ctx:MLParser.ListContext):
         pass
 
 
@@ -269,15 +287,6 @@ class MLListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MLParser#primaryExpression.
-    def enterPrimaryExpression(self, ctx:MLParser.PrimaryExpressionContext):
-        pass
-
-    # Exit a parse tree produced by MLParser#primaryExpression.
-    def exitPrimaryExpression(self, ctx:MLParser.PrimaryExpressionContext):
-        pass
-
-
     # Enter a parse tree produced by MLParser#functionCall.
     def enterFunctionCall(self, ctx:MLParser.FunctionCallContext):
         pass
@@ -287,12 +296,12 @@ class MLListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MLParser#trigFunction.
-    def enterTrigFunction(self, ctx:MLParser.TrigFunctionContext):
+    # Enter a parse tree produced by MLParser#literal.
+    def enterLiteral(self, ctx:MLParser.LiteralContext):
         pass
 
-    # Exit a parse tree produced by MLParser#trigFunction.
-    def exitTrigFunction(self, ctx:MLParser.TrigFunctionContext):
+    # Exit a parse tree produced by MLParser#literal.
+    def exitLiteral(self, ctx:MLParser.LiteralContext):
         pass
 
 

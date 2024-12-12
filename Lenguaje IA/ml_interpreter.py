@@ -2,6 +2,8 @@
 import sys  # Proporciona acceso a funciones y parámetros específicos del sistema
 import math  # Proporciona funciones matemáticas estándar
 from antlr4 import *  # Importa las herramientas de ANTLR para análisis léxico y sintáctico
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Importación de módulos personalizados
 from MLParser import MLParser  # Parser generado por ANTLR para interpretar el lenguaje
@@ -206,6 +208,28 @@ class MLInterpreter(MLListener):
         else:
             ErrorHandler.log_error(f"Error al evaluar la expresión print: {expression}")
 
+    def exitPlotStatement(self, ctx):
+        try:
+            trig_functions = []
+            for trig_func in ctx.trigFunction():
+                trig_func_expr = trig_func.getText()
+                trig_functions.append(trig_func_expr)
+
+            # Verificar si el rango está presente
+            if hasattr(ctx, 'range') and ctx.range():
+                range_expr = ctx.range().getText()
+                rango = self._safe_eval(range_expr)
+            else:
+                # Rango predeterminado
+                rango = (-2 * np.pi, 2 * np.pi)
+
+            for trig_expr in trig_functions:
+                print(f"Graficando: {trig_expr} con rango {rango}")
+                graficar_funcion_trigonometrica(trig_expr, rango)
+
+        except Exception as e:
+            print(f"[error] Ocurrió un error al manejar plotTrig: {str(e)}")
+
 
     def exitStatement(self, ctx):
         if self.execution_count > 0:
@@ -228,6 +252,8 @@ class MLInterpreter(MLListener):
             self.exitIncrementStatement(ctx.incrementStatement())
         elif ctx.regresionStatement():
             self.exitRegresionStatement(ctx.regresionStatement())
+        elif ctx.plotStatement():  # Verificación para plotTrig
+            self.exitPlotStatement(ctx.plotStatement())  # Llama al método para manejar la instrucción plotTrig
 
         self.execution_count += 1  # Incrementa el contador de ejecuciones
 

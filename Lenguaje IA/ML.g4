@@ -16,13 +16,44 @@ statement
     | condicionalStatement
     | trigFunction
     | plotStatement
+    | randomStatement
     ;
 
 printStatement: 'print' '(' expression ')' ;
 
-literal
-    : NUMBER
-    | STRING
+plotTrig: 'plotTrig' '(' trigFunction (',' trigFunction)* ',' range ')' ;
+
+expression
+    : primaryExpression
+    | expression '^' expression
+    | expression ('*' | '/' | '%') expression
+    | expression ('+' | '-') expression
+    | list 
+    | trigFunction
+    | NUMBER
+    ;
+
+list
+    : '[' (expression (',' expression)*)? ']'  // Define a list of expressions
+    ;
+
+
+primaryExpression
+    : literal
+    | ID
+    | matrixAccess
+    | functionCall
+    | '(' expression ')'
+    ;
+
+trigFunction
+    : ('sin' | 'cos' | 'tan' | 'asin' | 'acos' | 'atan') '(' expression ')'
+    | 'plt' '.' ('plot' | 'scatter' | 'show' | 'figure' | 'savefig') '(' expression (',' expression)* ')'
+    ;
+
+range
+    : expression '..' expression
+    | 'range' '(' expression ',' expression ')'
     ;
 
 arithmeticStatement
@@ -71,30 +102,13 @@ whileLoop
     : 'while' '(' comparisonExpression ')' '{' statement* '}'
     ;
 
-
 forLoop
     : 'for' variable 'in' range (',' 'step' '=' expression)? '{' statement* '}'
-    ;
-
-range
-    : expression '..' expression
     ;
 
 fileStatement
     : 'read' '(' STRING ')'
     | 'write' '(' STRING ',' expression ')'
-    ;
-
-expression
-    : primaryExpression
-    | expression '^' expression
-    | expression ('*' | '/' | '%') expression
-    | expression ('+' | '-') expression
-    | list 
-    ;
-
-list
-    : '[' (expression (',' expression)*)? ']'  // Define a list of expressions
     ;
 
 comparisonExpression
@@ -131,6 +145,7 @@ variable
     : ID
     ;
 
+
 regresionStatement
     : 'regresion' '(' expression ',' expression ')'
     ;
@@ -139,21 +154,13 @@ perceptronStatement
     : 'perceptron' '(' (statement | expression) ')'
     ;
 
-primaryExpression
-    : literal
-    | ID
-    | matrixAccess
-    | functionCall
-    | '(' expression ')'
-    ;
-
 functionCall
     : ID '(' expression (',' expression)* ')'
     ;
 
-trigFunction
-    : ('sin' | 'cos' | 'tan' | 'asin' | 'acos' | 'atan') '(' expression ')'
-    | 'plotTrig' '(' trigFunction (',' trigFunction)* ',' range ')'
+literal
+    : NUMBER
+    | STRING
     ;
 
 plotStatement
