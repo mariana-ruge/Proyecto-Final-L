@@ -20,7 +20,7 @@ from perceptron import train_perceptron, classify_operation, train  # Función p
 from loop import exitForLoop, exitWhileLoop  # Funciones para manejar bucles importadas de loops.py
 from condicionales import Condicionales
 from trigonometria import graficar_funcion_trigonometrica  # [Agregado] Importa el módulo de funciones trigonométricas
-
+from random_dsl import generar_numero_aleatorio #Funciones para genera numeros aleatorios
 
 
 # Constante para definir el límite máximo de recursión en bucles
@@ -179,7 +179,23 @@ class MLInterpreter(MLListener):
         """
         self.condicionales.manejar_condicional(ctx)
 
+    def exitRandomStatement(self, ctx):
+        try:
+            # Evaluar las expresiones para obtener los límites
+            if ctx.expression():
+                min_expr = ctx.expression(0).getText()
+                max_expr = ctx.expression(1).getText() if len(ctx.expression()) > 1 else None
 
+                min_value = self._safe_eval(min_expr)
+                max_value = self._safe_eval(max_expr) if max_expr else None
+
+                numero_aleatorio = generar_numero_aleatorio(min_value, max_value)
+                print(f"Número aleatorio generado: {numero_aleatorio}")
+            else:
+                numero_aleatorio = generar_numero_aleatorio()
+                print(f"Número aleatorio generado: {numero_aleatorio}")
+        except Exception as e:
+            print(f"[error] Ocurrió un error al generar el número aleatorio: {str(e)}")
 
 
     def handle_print_statement(self, ctx):
@@ -253,7 +269,9 @@ class MLInterpreter(MLListener):
         elif ctx.regresionStatement():
             self.exitRegresionStatement(ctx.regresionStatement())
         elif ctx.plotStatement():  # Verificación para plotTrig
-            self.exitPlotStatement(ctx.plotStatement())  # Llama al método para manejar la instrucción plotTrig
+            self.exitPlotStatement(ctx.plotStatement())# Llama al método para manejar la instrucción plotTrig
+        elif ctx.exitRandomStatement():
+            self.exitRandomStatement(ctx.randomStatement())
 
         self.execution_count += 1  # Incrementa el contador de ejecuciones
 

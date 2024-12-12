@@ -145,6 +145,9 @@ variable
     : ID
     ;
 
+randomStatement
+    : 'random' '(' (expression (',' expression)?)? ')'
+    ;
 
 regresionStatement
     : 'regresion' '(' expression ',' expression ')'

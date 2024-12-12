@@ -269,6 +269,15 @@ class MLListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by MLParser#randomStatement.
+    def enterRandomStatement(self, ctx:MLParser.RandomStatementContext):
+        pass
+
+    # Exit a parse tree produced by MLParser#randomStatement.
+    def exitRandomStatement(self, ctx:MLParser.RandomStatementContext):
+        pass
+
+
     # Enter a parse tree produced by MLParser#regresionStatement.
     def enterRegresionStatement(self, ctx:MLParser.RegresionStatementContext):
         pass
